@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Assignment;
+use App\User;
+use App\Territory;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Http\Requests\AssignmentRequest;
 
 class AssignmentsController extends Controller
 {
@@ -24,7 +27,7 @@ class AssignmentsController extends Controller
       $assignments = Assignment::all();
 
 
-      return view('territories/assignments.index', compact('assignments'));
+      return view('assignments.index', compact('assignments'));
   }
 
   /**
@@ -38,7 +41,7 @@ class AssignmentsController extends Controller
       $users = \DB::table('users')->lists('name', 'id');
       $maps = \DB::table('maps')->lists('name', 'id');
 
-      return view('territories/assignments.create', compact('users', 'maps'));
+      return view('assignments.create', compact('users', 'maps'));
   }
 
   /**
@@ -53,7 +56,7 @@ class AssignmentsController extends Controller
 
       Assignment::create($request->all());
 
-      return redirect('territories/assignments')->with('message', 'The assignment has been created!');
+      return redirect('assignments')->with('message', 'The assignment has been created!');
   }
 
   /**
@@ -84,7 +87,7 @@ class AssignmentsController extends Controller
     $users = \DB::table('users')->lists('name', 'id');
     $maps = \DB::table('maps')->lists('name', 'id');
 
-    return view('territories/assignments.edit', compact('assignment', 'users', 'maps'));
+    return view('assignments.edit', compact('assignment', 'users', 'maps'));
   }
 
   /**
@@ -109,7 +112,7 @@ public function finished()
     $assignments = Assignment::finished()->get();
 
 
-    return view('territories/assignments.index', compact('assignments'));
+    return view('assignments.index', compact('assignments'));
 }
 
 
@@ -119,7 +122,7 @@ public function unfinished()
     $assignments = Assignment::unfinished()->get();
 
 
-    return view('territories/assignments.index', compact('assignments'));
+    return view('assignments.index', compact('assignments'));
 }
 
 

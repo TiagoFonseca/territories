@@ -7,7 +7,7 @@
 
         <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
         
-        <link rel="stylesheet" href="{{ URL::asset('laravel.dev/css/app.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('territories/css/app.css') }}">
 
         <style>
 
