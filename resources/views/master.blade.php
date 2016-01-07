@@ -6,8 +6,8 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
         <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
-        
-        <link rel="stylesheet" href="{{ URL::asset('territories/css/app.css') }}">
+
+        <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
         <style>
 

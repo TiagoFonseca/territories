@@ -32,4 +32,9 @@ class Map extends Model
   public function assignments(){
     return $this->hasMany('App\Assignment');
   }
+
+  public function slips()
+  {
+    return $this->hasMany('App\Slip', 'slip_id');
+  }
 }

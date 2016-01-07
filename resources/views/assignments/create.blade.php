@@ -5,7 +5,7 @@
 
 	<hr/>
 
-	{!! Form::open(['url' => 'territories/assignments']) !!}
+	{!! Form::open(['url' => 'assignments']) !!}
 
 		@include('assignments.form', ['submitButtonText' => 'Assign territory'])
 

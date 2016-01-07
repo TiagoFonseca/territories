@@ -14,8 +14,7 @@ class CreateMigrationSlips extends Migration
     {
       Schema::create('slips', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('map_id');
-          $table->integer('number');
+          $table->integer('map_id')->nullable();
           $table->string('name');
           $table->timestamps();
       });

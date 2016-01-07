@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
 {
     /* whitelist variables for mass-assignment, all others will be blacklisted */
-    protected $fillable = ['user_id', 'territory_id', 'assigned_on', 'finished_on'];
+    protected $fillable = ['user_id', 'map_id', 'assigned_on', 'finished_on'];
 
     /**
      * Additional fields to treat as carbon instances

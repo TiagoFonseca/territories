@@ -27,6 +27,8 @@ Route::get('assignments/finished', 'AssignmentsController@finished');
 Route::get('assignments/unfinished', 'AssignmentsController@unfinished');
 
 Route::resource('assignments', 'AssignmentsController');
+Route::resource('slips', 'SlipsController');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

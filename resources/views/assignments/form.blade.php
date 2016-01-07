@@ -1,16 +1,14 @@
 
 <div class="form-group @if($errors->first('user_id')) has-error @endif">
 	    {!! Form::label('user', 'User') !!}
-	    {!! Form::select('user_id', (['0' => 'Select a User'] + $users), null, ['class' => 'form-control']) !!}
+	    {!! Form::select('user_id', (['0' => 'Select a User'] + $users), null, ['required' => 'required', 'class' => 'form-control']) !!}
 	    <small class="text-danger">{{ $errors->first('user_id') }}</small>
 	</div>
 		<div class="form-group @if($errors->first('map_id')) has-error @endif">
 	    {!! Form::label('map', 'Map') !!}
-	    {!! Form::select('map_id', (['0' => 'Select a Map'] + $maps), null, ['class' => 'form-control']) !!}
+	    {!! Form::select('map_id', (['0' => 'Select a Map'] + $maps), null, ['required' => 'required', 'class' => 'form-control']) !!}
 	    <small class="text-danger">{{ $errors->first('map_id') }}</small>
 	</div>
-
-
 
 @if (Request::is('*/edit'))
 		<div class="form-group">

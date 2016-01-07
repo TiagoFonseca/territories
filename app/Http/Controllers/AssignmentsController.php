@@ -54,6 +54,7 @@ class AssignmentsController extends Controller
   {
        //only continues below if validation doesn't fail
 
+      //dd($request->input('map_id')); 
       Assignment::create($request->all());
 
       return redirect('assignments')->with('message', 'The assignment has been created!');
