@@ -7,24 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Slip extends Model
 {
 
-  protected $fillable = ['name'];
+  protected $fillable = ['map_id', 'name'];
 
-  /**
-  * Additional fields to treat as carbon instances
-  * @var array
-  */
-  protected $dates = ['published_at'];
-
-  /**
-  * Scope queries to territories that have been assigned
-  *
-  * @param  [type] $query [description]
-  * @return [type]        [description]
-  */
-
+  /* Each SLip belongs to only one Map */
 
   public function map()
   {
     return $this->belongsTo('App\Map', 'map_id');
+  }
+
+  /* Each Slip can have many Houses */
+  public function houses()
+  {
+    return $this->hasMany('App\House');
   }
 }

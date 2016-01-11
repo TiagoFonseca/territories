@@ -12,10 +12,6 @@ use App\Http\Requests\AssignmentRequest;
 
 class AssignmentsController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth', ['except' => 'index, show']);
-  }
   /**
    * Display a listing of the resource.
    *
@@ -54,7 +50,7 @@ class AssignmentsController extends Controller
   {
        //only continues below if validation doesn't fail
 
-      //dd($request->input('map_id')); 
+      //dd($request->input('map_id'));
       Assignment::create($request->all());
 
       return redirect('assignments')->with('message', 'The assignment has been created!');
@@ -72,7 +68,7 @@ class AssignmentsController extends Controller
 
       // return $map_user;
 
-      return view('territories/assignments.show', compact('assignment'));
+      return view('assignments.show', compact('assignment'));
   }
 
   /**

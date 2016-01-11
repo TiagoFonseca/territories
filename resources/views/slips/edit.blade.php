@@ -2,13 +2,13 @@
 
 @section('content')
 
-	<h1>Edit: {!! $map->name!!} </h1>
+	<h1>Edit: {!! $slip->name!!} </h1>
 
 	<hr/>
 
-	{!! Form::model($map, ['method' => 'PATCH', 'action' => ['MapsController@update', $map->id]]) !!}
+	{!! Form::model($slip, ['method' => 'PATCH', 'action' => ['SlipsController@update', $slip->id]]) !!}
 
-				@include('maps.form', ['submitButtonText' => 'Update Map'])
+				@include('slips.form', ['submitButtonText' => 'Update Slip'])
 
 	{!! Form::close() !!}
 

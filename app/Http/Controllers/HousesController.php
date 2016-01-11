@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Slip;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Http\Requests\SlipRequest;
 
 class HousesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,9 @@ class HousesController extends Controller
      */
     public function index()
     {
-        //
+      $houses = House::all();
+
+      return view('houses.index', compact('houses'));
     }
 
     /**

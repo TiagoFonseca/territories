@@ -29,12 +29,18 @@ class Map extends Model
     });
   }
 
+/**
+ * Each Map has many assignments (??) */
+ */
   public function assignments(){
     return $this->hasMany('App\Assignment');
   }
 
+/**
+ * Each Map has many Slips
+ */
   public function slips()
   {
-    return $this->hasMany('App\Slip', 'slip_id');
+    return $this->hasMany('App\Slip');
   }
 }

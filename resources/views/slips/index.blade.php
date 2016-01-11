@@ -17,8 +17,11 @@
 		<tbody>
 			@foreach ($slips as $slip)
 				<tr>
-					<td> {{ $slip->name }} </a>	</td>
-					<td> {{ $slip->map->number }} - {{ $slip->map->name }} </td>
+					<td> <a href= "{{ action('SlipsController@show', ($slip->id)) }}">{{ $slip->name }} </a>	</td>
+					<td> {{$slip->map->number}} - {{$slip->map->name}} </td>
+					{{-- <td>
+						test
+					</td> --}}
 					<td> houses	</td>
 
 				</tr>

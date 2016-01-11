@@ -6,18 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Slip;
 use App\User;
-use App\Territory;
+use App\Map;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Http\Requests\AssignmentRequest;
+use App\Http\Requests\SlipRequest;
 
 class SlipsController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth', ['except' => 'index, show']);
-  }
+  
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +23,7 @@ class SlipsController extends Controller
     public function index()
     {
       $slips = Slip::all();
-
+      $maps = Map::all();
 
       return view('slips.index', compact('slips'));
     }
@@ -39,7 +36,7 @@ class SlipsController extends Controller
     public function create()
     {
       $maps = \DB::table('maps')->lists('name', 'id');
-      
+
       $slips = Slip::all();
       return view('slips.create', compact('slips', 'maps'));
     }
@@ -50,9 +47,11 @@ class SlipsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlipRequest $request)
     {
-        //
+      Slip::create($request->all());
+
+      return redirect('slips')->with('message', 'The slip has been created!');
     }
 
     /**
@@ -61,9 +60,13 @@ class SlipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Slip $request, $id)
     {
-        //
+      $slip = $request->find($id);
+
+      // return $map_user;
+
+      return view('slips.show', compact('slip'));
     }
 
     /**
@@ -74,7 +77,11 @@ class SlipsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $slip = Slip::find($id);
+
+        $maps = \DB::table('maps')->lists('name', 'id');
+
+        return view('slips.edit', compact('slip', 'maps'));
     }
 
     /**
@@ -84,9 +91,13 @@ class SlipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SlipRequest $request, $id)
     {
-        //
+      $slip = Slip::find($id);
+
+      $slip->update($request->all());
+
+      return redirect('slips');
     }
 
     /**
