@@ -6,6 +6,8 @@ use App\Map;
 use App\Slip;
 use App\User;
 use App\Assignment;
+use App\House;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -14,7 +16,7 @@ use App\Http\Requests\MapRequest;
 class MapsController extends Controller
 {
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -71,22 +73,40 @@ class MapsController extends Controller
 
        $users = User::all();
 
+       $houses = House::all();
+
        $assignments = Assignment::all();
 
+       $slips = Slip::all();
+
+/* checking if there is a territory that is still being worked on */
        $ass_terr = $assignments->where('map_id', $id)
                               ->where('finished_on', Null)
                               ->first();
+
+/* if there is a territory that is still being worked on we are going to look for the publisher's name */
       if($ass_terr){
         $user_id = $ass_terr->user_id;
         $username = $users->where('id', $user_id)
                           ->first();
 
+/* if the name exists we will populate the variable, otherwise we will send it empty */
         $name = $username->name;
       } else {
         $name="";
       }
 
-      return view('maps.show', compact('map', 'name'));
+/* looking for the slips assigned to that territory */
+      $listSlips = $slips->where('map_id', $id);
+
+/* looking for the streets assigned to that territory */
+      $listStreets = $houses->select('street')
+                            ->where('slip_id', map()->slip()->id)
+                            ->get();
+
+/* looking for the blocks assigned to that territory */
+
+      return view('maps.show', compact('map', 'name', 'listSlips', 'listHouses'));
 
     }
 

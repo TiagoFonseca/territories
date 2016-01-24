@@ -1,13 +1,13 @@
 @extends('master')
 
 @section('content')
-	<h1> Add a new map</h1>
+	<h1> Add a new house</h1>
 
 	<hr/>
 
-	{!! Form::open(['url' => 'maps']) !!}
+	{!! Form::open(['url' => 'houses']) !!}
 
-		@include('maps.form', ['submitButtonText' => 'Create Map'])
+		@include('houses.form', ['submitButtonText' => 'Create house'])
 
 	{!! Form::close() !!}
 

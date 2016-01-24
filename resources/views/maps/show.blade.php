@@ -6,6 +6,15 @@
 		{{$name}} </div>
 	@endif
 	<hr/>
-	<article> {{ $map->name }} </article>
+
+	@foreach ($listSlips as $slip)
+		<article> {{ $slip->name }} </article>
+	@endforeach
+
+	<article> <b>Houses</b> </article>
+
+	@foreach($ass_houses as $house)
+		{{ $house->number }}
+	@endforeach
 
 @stop

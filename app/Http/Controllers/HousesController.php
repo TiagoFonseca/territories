@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\House;
 use App\Slip;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Http\Requests\SlipRequest;
+use App\Http\Requests\HouseRequest;
 
 class HousesController extends Controller
 {
@@ -32,7 +33,11 @@ class HousesController extends Controller
      */
     public function create()
     {
-        //
+
+      $slips = \DB::table('slips')->lists('name', 'id');
+
+      return view('houses.create', compact('slips'));
+
     }
 
     /**
@@ -41,9 +46,11 @@ class HousesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HouseRequest $request)
     {
-        //
+      House::create($request->all());
+
+      return redirect('houses')->with('message', 'The house has been created!');
     }
 
     /**

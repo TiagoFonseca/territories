@@ -14,7 +14,7 @@ use App\Http\Requests\SlipRequest;
 
 class SlipsController extends Controller
 {
-  
+
     /**
      * Display a listing of the resource.
      *
@@ -64,9 +64,15 @@ class SlipsController extends Controller
     {
       $slip = $request->find($id);
 
+    //  $house = \DB::table('houses')->lists('number', 'id');
+
+      /* getting all the houses with this slip id */
+
+       $ass_houses = \DB::table('houses')->where('slip_id', $id);
+
       // return $map_user;
 
-      return view('slips.show', compact('slip'));
+      return view('slips.show', compact('slip', 'ass_houses'));
     }
 
     /**

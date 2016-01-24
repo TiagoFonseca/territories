@@ -15,7 +15,7 @@ class CreateMigrationHouses extends Migration
       Schema::create('houses', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('slip_id');
-          $table->integer('number');
+          $table->string('number');
           $table->string('street');
           $table->string('type');
           $table->string('status');
