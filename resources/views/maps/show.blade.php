@@ -13,7 +13,7 @@
 
 	<article> <b>Houses</b> </article>
 
-	@foreach($ass_houses as $house)
+	@foreach($listStreets as $street)
 		{{ $house->number }}
 	@endforeach
 

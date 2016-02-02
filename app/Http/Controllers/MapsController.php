@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Map;
 use App\Slip;
 use App\User;
@@ -69,6 +70,8 @@ class MapsController extends Controller
     public function show(Map $request, $id)
     {
 
+      $maps = Map::all();
+
        $map = $request->find($id);
 
        $users = User::all();
@@ -100,13 +103,24 @@ class MapsController extends Controller
       $listSlips = $slips->where('map_id', $id);
 
 /* looking for the streets assigned to that territory */
-      $listStreets = $houses->select('street')
-                            ->where('slip_id', map()->slip()->id)
-                            ->get();
+      //$listStreets = $houses->where('slip_id', map()->slip()->id);
+    //  $streets = DB::table('houses')->where('id', )->value('street');
+      //dd( $map->slips );
 
+      foreach ($map->slips as $slip) {
+          $slipName[]=$slip->name;
+          
+          foreach($slip->houses as $house){
+            $streetName[]=$house->street;
+            $houseNumber[] = DB::table('houses')->where('street', $house->street)->value('number');
+          }
+      }
+      dd($slipName, $streetName, $houseNumber);
+
+    //  return compact('$test');
 /* looking for the blocks assigned to that territory */
 
-      return view('maps.show', compact('map', 'name', 'listSlips', 'listHouses'));
+      //return view('maps.show', compact('map', 'name', 'listSlips', 'listStreets'));
 
     }
 

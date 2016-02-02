@@ -31,7 +31,7 @@ class Map extends Model
 
 /**
  * Each Map has many assignments (??) */
- 
+
   public function assignments(){
     return $this->hasMany('App\Assignment');
   }
