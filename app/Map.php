@@ -43,4 +43,9 @@ class Map extends Model
   {
     return $this->hasMany('App\Slip');
   }
+
+  public function houses()
+  {
+      return $this->hasManyThrough('App\House', 'App\Slip');
+  }
 }

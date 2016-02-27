@@ -14,8 +14,8 @@ class CreateMigrationAssignments extends Migration
     {
       Schema::create('assignments', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('user_id')->unsigned;
-          $table->string('map_id')->unsigned;
+          $table->integer('user_id')->unsigned;
+          $table->integer('map_id')->unsigned;
           $table->timestamp('assigned_on')->nullable();
           $table->timestamp('finished_on')->nullable();
           $table->timestamps();

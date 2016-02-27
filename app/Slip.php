@@ -21,4 +21,9 @@ class Slip extends Model
   {
     return $this->hasMany('App\House');
   }
+
+  public function streets()
+  {
+    return $this->hasManyThrough('App\Street', 'App\House');
+  }
 }

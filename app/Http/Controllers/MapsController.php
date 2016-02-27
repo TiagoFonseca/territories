@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Map;
+use App\Street;
+
 use App\Slip;
 use App\User;
 use App\Assignment;
@@ -82,6 +84,8 @@ class MapsController extends Controller
 
        $slips = Slip::all();
 
+       $streets = Street::all();
+
 /* checking if there is a territory that is still being worked on */
        $ass_terr = $assignments->where('map_id', $id)
                               ->where('finished_on', Null)
@@ -103,24 +107,51 @@ class MapsController extends Controller
       $listSlips = $slips->where('map_id', $id);
 
 /* looking for the streets assigned to that territory */
-      //$listStreets = $houses->where('slip_id', map()->slip()->id);
-    //  $streets = DB::table('houses')->where('id', )->value('street');
-      //dd( $map->slips );
+    // foreach ($map->slips as $slip) {
+    //     $theSlip[]=$slip;
+    //       foreach ($slip->houses as $house) {
+    //         //$houses[]=$house;
+    //         $x=$house->name;
+    //       }
+    //   }
+    //
+    //   $mySlips=$map->slips()->first();
+            //$myStreets=$mySlips->houses;
+      //foreach ($mySlips as $slip) {
+/* Group our collection by Street ID */
+      $assignedSlips = $map->houses->groupBy('slip_id');
+      //$uniqueSlip = $map->houses->unique('slip_id');
+    //  echo $assignedSlips;
+      // $uniqueSlip = $uniqueSlip->unique('slip_id');
+      foreach ($assignedSlips as $slip) {
+        $uniqueSlip = $slip->unique('slip_id')->all();
+        $uniqueSlipId = $uniqueSlip[0]['slip_id'];
+        echo "<br/><br/>Slip ".$slips->find($uniqueSlipId)->name."<br/><br/>";
 
-      foreach ($map->slips as $slip) {
-          $slipName[]=$slip->name;
-          
-          foreach($slip->houses as $house){
-            $streetName[]=$house->street;
-            $houseNumber[] = DB::table('houses')->where('street', $house->street)->value('number');
-          }
-      }
-      dd($slipName, $streetName, $houseNumber);
+        $assignedHouses = $map->houses->where('slip_id', $uniqueSlipId)->groupBy('street_id');
 
+        foreach ($assignedHouses as $house) {
+
+  /* Get a unique list of Street Ids so that later we can get the names*/
+          $uniqueStreet = $house->unique('street_id')->where('slip_id', $uniqueSlipId);
+
+              foreach ($uniqueStreet as $str) {
+
+                  echo $streets->find($str->street_id)->name."<br/>";
+
+              }
+
+              foreach ($house as $test) {
+                echo "<p>".$test->number."</p>";
+
+              }
+             }
+       }
+       dd($assignedHouses);
     //  return compact('$test');
 /* looking for the blocks assigned to that territory */
 
-      //return view('maps.show', compact('map', 'name', 'listSlips', 'listStreets'));
+       return view('maps.show', compact('map', 'name', 'theSlip', 'streets'));
 
     }
 

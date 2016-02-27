@@ -29,7 +29,7 @@ Route::get('assignments/unfinished', 'AssignmentsController@unfinished');
 Route::resource('assignments', 'AssignmentsController');
 Route::resource('slips', 'SlipsController');
 Route::resource('houses', 'HousesController');
-
+Route::resource('streets', 'StreetsController');
 
 
 Route::controllers([

@@ -7,7 +7,18 @@
 	@endif
 	<hr/>
 
-	@foreach ($listSlips as $slip)
+	@foreach($theSlip as $slip)
+		<h3> {{$slip->name}}	</h3>
+		@foreach($streets as $street)
+			{{$street->name}}
+			@foreach($slip->houses as $house)
+					<div style="margin-left:4rem">{{$house->number}}</div>
+			@endforeach
+		@endforeach
+
+	@endforeach
+
+	{{-- @foreach ($listSlips as $slip)
 		<article> {{ $slip->name }} </article>
 	@endforeach
 
@@ -15,6 +26,6 @@
 
 	@foreach($listStreets as $street)
 		{{ $house->number }}
-	@endforeach
+	@endforeach --}}
 
 @stop

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class HouseRequest extends Request
+class StreetRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class HouseRequest extends Request
     public function rules()
     {
         return [
-          'slip_id' => 'required',
-          'street_id' => 'required',
-          'number' => 'required',
-          'type' => 'required'
-
+            'name' => 'required',
         ];
     }
 }

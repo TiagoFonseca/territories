@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMigrationHouses extends Migration
+class CreateMigrationsStreets extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateMigrationHouses extends Migration
      */
     public function up()
     {
-      Schema::create('houses', function (Blueprint $table) {
+      Schema::create('streets', function (Blueprint $table) {
         $table->increments('id');
-        $table->integer('slip_id');
-        $table->integer('street_id');
-        $table->string('number');
-        $table->string('type');
-        $table->string('status');
-        $table->string('description');
+        $table->string('name');
         $table->timestamps();
+
       });
     }
 
@@ -31,6 +27,6 @@ class CreateMigrationHouses extends Migration
      */
     public function down()
     {
-          Schema::drop('houses');
+      Schema::drop('streets');
     }
 }

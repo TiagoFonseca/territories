@@ -20,7 +20,7 @@
 				<tr>
 					<td> {{ $house->slip->name }} </td>
 					<td> <a href= "{{ action('HousesController@show', ($house->id)) }}"> {{ $house->number }} </a>	</td>
-					<td> {{ $house->street}}	</td>
+					<td> {{ $house->street->name}}	</td>
 					<td> {{ $house->type }}	</td>
 					<td> {{ $house->status }} </td>
 				</tr>

@@ -68,8 +68,8 @@ class SlipsController extends Controller
 
       /* getting all the houses with this slip id */
 
-       $ass_houses = \DB::table('houses')->where('slip_id', $id);
-
+       $ass_houses = \DB::table('houses')->where('slip_id', $id)->get();
+       //dd($ass_houses);
       // return $map_user;
 
       return view('slips.show', compact('slip', 'ass_houses'));

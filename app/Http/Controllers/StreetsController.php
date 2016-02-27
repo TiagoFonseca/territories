@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\House;
-use App\Slip;
 use App\Street;
+use App\User;
+use App\Map;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Http\Requests\HouseRequest;
+use App\Http\Requests\StreetRequest;
 
-class HousesController extends Controller
+class StreetsController extends Controller
 {
 
     /**
@@ -22,9 +22,9 @@ class HousesController extends Controller
      */
     public function index()
     {
-      $houses = House::all();
+      $streets = Street::all();
 
-      return view('houses.index', compact('houses'));
+      return view('streets.index', compact('streets'));
     }
 
     /**
@@ -34,13 +34,10 @@ class HousesController extends Controller
      */
     public function create()
     {
+    //  $maps = \DB::table('maps')->lists('name', 'id');
 
-      $slips = \DB::table('slips')->lists('name', 'id');
-      $streets = \DB::table('streets')->lists('name', 'id');
-
-
-      return view('houses.create', compact('slips', 'streets'));
-
+      $streets = Street::all();
+      return view('streets.create', compact('streets'));
     }
 
     /**
@@ -49,11 +46,11 @@ class HousesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(HouseRequest $request)
+    public function store(StreetRequest $request)
     {
-      House::create($request->all());
+      Street::create($request->all());
 
-      return redirect('houses')->with('message', 'The house has been created!');
+      return redirect('streets')->with('message', 'The street has been created!');
     }
 
     /**
@@ -62,9 +59,19 @@ class HousesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Street $request, $id)
     {
-        //
+      $street = $request->find($id);
+
+    //  $house = \DB::table('houses')->lists('number', 'id');
+
+      /* getting all the houses with this street id */
+
+       $ass_houses = \DB::table('houses')->where('street_id', $id)->get();
+       //dd($ass_houses);
+      // return $map_user;
+
+      return view('streets.show', compact('street', 'ass_houses'));
     }
 
     /**
@@ -75,7 +82,11 @@ class HousesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $street = Street::find($id);
+
+        $maps = \DB::table('maps')->lists('name', 'id');
+
+        return view('streets.edit', compact('street', 'maps'));
     }
 
     /**
@@ -85,9 +96,13 @@ class HousesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StreetRequest $request, $id)
     {
-        //
+      $street = Street::find($id);
+
+      $street->update($request->all());
+
+      return redirect('streets');
     }
 
     /**

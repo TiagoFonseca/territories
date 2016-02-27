@@ -4,16 +4,17 @@
 	    <small class="text-danger">{{ $errors->first('slip_id') }}</small>
 	</div>
 
+	<div class="form-group @if($errors->first('street_id')) has-error @endif">
+		    {!! Form::label('street', 'Street') !!}
+		    {!! Form::select('street_id', (['0' => 'Select a Street'] + $streets), null, ['required' => 'required', 'class' => 'form-control']) !!}
+		    <small class="text-danger">{{ $errors->first('street_id') }}</small>
+		</div>
+
+
 	<div class="form-group">
 		    {!! Form::label('number', 'Number:') !!}
 		    {!! Form::text('number', null, ['class' => 'form-control']) !!}
 		    <small class="text-danger">{{ $errors->first('number') }}</small>
-	</div>
-
-	<div class="form-group">
-	    {!! Form::label('street', 'Street:') !!}
-	    {!! Form::text('street', null, ['class' => 'form-control']) !!}
-	    <small class="text-danger">{{ $errors->first('street') }}</small>
 	</div>
 
 	<div class="form-group">
