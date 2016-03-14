@@ -1,31 +1,23 @@
 @extends('master')
 
 @section('content')
-	<h1> 	{{ $map->name }} </h1>
-	<small> <b>Last updated</b> {{ $map->updated_at->diffForHumans() }}</small>	@if($name) <div class="alert alert-info" role="alert"><b>This map is currently assigned to <b/>
-		{{$name}} </div>
-	@endif
-	<hr/>
+	<h1> 	{{$mapName}} </h1>
 
-	@foreach($theSlip as $slip)
-		<h3> {{$slip->name}}	</h3>
-		@foreach($streets as $street)
-			{{$street->name}}
-			@foreach($slip->houses as $house)
-					<div style="margin-left:4rem">{{$house->number}}</div>
+		@foreach($myData['slip'] as $key => $slip)
+			<ul>
+				<li>Slip	{{$key}}</li>
+			@foreach($slip['street'] as $key => $street)
+				<ul>
+
+				<li> {{$key}} </li>
+				@foreach($street['house'] as $key => $house)
+					<ul>
+						<li>{{$house}}</li>
+					</ul>
+				@endforeach
+				</ul>
 			@endforeach
+		</ul>
 		@endforeach
-
-	@endforeach
-
-	{{-- @foreach ($listSlips as $slip)
-		<article> {{ $slip->name }} </article>
-	@endforeach
-
-	<article> <b>Houses</b> </article>
-
-	@foreach($listStreets as $street)
-		{{ $house->number }}
-	@endforeach --}}
 
 @stop

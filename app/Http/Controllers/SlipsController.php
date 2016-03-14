@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Slip;
 use App\User;
 use App\Map;
+use App\House;
+use App\Street;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -63,16 +65,30 @@ class SlipsController extends Controller
     public function show(Slip $request, $id)
     {
       $slip = $request->find($id);
-
+      $slipName = $slip->name;
+      $houses = House::all();
+      $streets = Street::all();
     //  $house = \DB::table('houses')->lists('number', 'id');
+    //echo($slip);
+    $assignedHouses = $slip->houses->groupBy('street_id');
+    //->where('slip_id', $id)->groupBy('street_id');
+    //dd($assignedHouses);
+    foreach ($assignedHouses as $house) {
 
-      /* getting all the houses with this slip id */
+/* Get a unique list of Street Ids so that later we can get the names*/
+      $uniqueStreet = $house->unique('street_id');
 
-       $ass_houses = \DB::table('houses')->where('slip_id', $id)->get();
-       //dd($ass_houses);
-      // return $map_user;
+          foreach ($uniqueStreet as $str) {
+              $streetName = $streets->find($str->street_id)->name;
 
-      return view('slips.show', compact('slip', 'ass_houses'));
+          }
+          foreach ($house as $test) {
+            $houseNumber = $test->number;
+            $myData['street'][$streetName]['house'][ ] = $houseNumber;
+            }
+         }
+        // dd($myData);
+      return view('slips.show', compact('slipName','myData'));
     }
 
     /**

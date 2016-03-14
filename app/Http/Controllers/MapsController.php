@@ -52,7 +52,7 @@ class MapsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MapRequest $request)
+    public function store(MapRequest $request, $id)
     {
           //only continues below if validation doesn't fail
 
@@ -75,83 +75,91 @@ class MapsController extends Controller
       $maps = Map::all();
 
        $map = $request->find($id);
+       $mapName = $map->name;
 
-       $users = User::all();
+      //  $users = User::all();
 
-       $houses = House::all();
+      //  $houses = House::all();
 
-       $assignments = Assignment::all();
+      //  $assignments = Assignment::all();
 
-       $slips = Slip::all();
+        $slips = Slip::all();
 
        $streets = Street::all();
 
 /* checking if there is a territory that is still being worked on */
-       $ass_terr = $assignments->where('map_id', $id)
-                              ->where('finished_on', Null)
-                              ->first();
+      //  $ass_terr = $assignments->where('map_id', $id)
+      //                         ->where('finished_on', Null)
+      //                         ->first();
 
 /* if there is a territory that is still being worked on we are going to look for the publisher's name */
-      if($ass_terr){
-        $user_id = $ass_terr->user_id;
-        $username = $users->where('id', $user_id)
-                          ->first();
+      // if($ass_terr){
+      //   $user_id = $ass_terr->user_id;
+      //   $username = $users->where('id', $user_id)
+      //                     ->first();
 
 /* if the name exists we will populate the variable, otherwise we will send it empty */
-        $name = $username->name;
-      } else {
-        $name="";
-      }
+      //   $name = $username->name;
+      // } else {
+      //   $name="";
+      // }
 
 /* looking for the slips assigned to that territory */
-      $listSlips = $slips->where('map_id', $id);
+      // $listSlips = $slips->where('map_id', $id);
 
 /* looking for the streets assigned to that territory */
-    // foreach ($map->slips as $slip) {
-    //     $theSlip[]=$slip;
-    //       foreach ($slip->houses as $house) {
-    //         //$houses[]=$house;
-    //         $x=$house->name;
-    //       }
-    //   }
-    //
-    //   $mySlips=$map->slips()->first();
-            //$myStreets=$mySlips->houses;
-      //foreach ($mySlips as $slip) {
+
 /* Group our collection by Street ID */
       $assignedSlips = $map->houses->groupBy('slip_id');
-      //$uniqueSlip = $map->houses->unique('slip_id');
-    //  echo $assignedSlips;
-      // $uniqueSlip = $uniqueSlip->unique('slip_id');
-      foreach ($assignedSlips as $slip) {
-        $uniqueSlip = $slip->unique('slip_id')->all();
-        $uniqueSlipId = $uniqueSlip[0]['slip_id'];
-        echo "<br/><br/>Slip ".$slips->find($uniqueSlipId)->name."<br/><br/>";
 
-        $assignedHouses = $map->houses->where('slip_id', $uniqueSlipId)->groupBy('street_id');
+      if (!$assignedSlips->isEmpty()) {
 
-        foreach ($assignedHouses as $house) {
 
-  /* Get a unique list of Street Ids so that later we can get the names*/
-          $uniqueStreet = $house->unique('street_id')->where('slip_id', $uniqueSlipId);
+      //  echo $assignedSlips;
+        // $uniqueSlip = $uniqueSlip->unique('slip_id');
+        $data = array();
+        foreach ($assignedSlips as $slip) {
+          $uniqueSlip = $slip->unique('slip_id')->all();
+          $uniqueSlipId = $uniqueSlip[0]['slip_id'];
+          $slipName = $slips->find($uniqueSlipId)->name;
 
-              foreach ($uniqueStreet as $str) {
+        //  $myData['slip'][] =  $slipName;
+          //$myData=array();
+        //  $mySlip=array( 'Slip name' => $slipName);
+        //  array_push($myData, $mySlip);
 
-                  echo $streets->find($str->street_id)->name."<br/>";
+          $assignedHouses = $map->houses->where('slip_id', $uniqueSlipId)->groupBy('street_id');
 
-              }
+          foreach ($assignedHouses as $house) {
 
-              foreach ($house as $test) {
-                echo "<p>".$test->number."</p>";
+    /* Get a unique list of Street Ids so that later we can get the names*/
+            $uniqueStreet = $house->unique('street_id')->where('slip_id', $uniqueSlipId);
 
-              }
-             }
-       }
-       dd($assignedHouses);
-    //  return compact('$test');
-/* looking for the blocks assigned to that territory */
+                foreach ($uniqueStreet as $str) {
+                    $streetName = $streets->find($str->street_id)->name;
 
-       return view('maps.show', compact('map', 'name', 'theSlip', 'streets'));
+                  //  $myStreet[$slipName]['street'] = $streetName;
+                  //$myData['slip'][$slipName]['street'][]=array('name' => $streetName);
+                  //array_push($myData, $myStreet);
+
+
+                }
+
+                foreach ($house as $test) {
+                   //$myHouse[$slipName][$streetName]['house'] = $test->number;
+                  $houseNumber = $test->number;
+                  $myData['slip'][$slipName]['street'][$streetName]['house'][ ] = $houseNumber;
+                  //array_push($myData, $myHouse);
+                  }
+               }
+         }
+         return view('maps.show', compact('mapName','myData'));
+       } else {
+        return view('maps.show_error');
+      }
+
+
+
 
     }
 
