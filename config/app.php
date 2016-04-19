@@ -148,6 +148,10 @@ return [
          App\Providers\RouteServiceProvider::class,
          Collective\Html\HtmlServiceProvider::class,
          Caffeinated\Menus\MenusServiceProvider::class,
+         Zofe\Rapyd\RapydServiceProvider::class,
+         Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
+         // AdminLTE template provider         
+        Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class,
 
     ],
 
@@ -203,6 +207,7 @@ return [
       'Form' => Collective\Html\FormFacade::class,
       'Html' => Collective\Html\HtmlFacade::class,
       'Menu' => Caffeinated\Menus\Facades\Menu::class,
+      
 
     ],
 

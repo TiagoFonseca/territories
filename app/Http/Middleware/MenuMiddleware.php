@@ -18,7 +18,7 @@ class MenuMiddleware
     public function handle($request, Closure $next)
     {
         Menu::make('MyNavBar', function($menu) {
-            $menu->add('Users', 'territories/users');
+            $menu->add('Users', 'users');
             $menu->add('Maps', 'territories/maps');
                 $menu->maps->add('View all', 'maps');
                 $menu->maps->add('View available', 'maps/available');

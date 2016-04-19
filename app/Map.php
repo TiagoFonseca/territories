@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Auth;
+
+
 use Illuminate\Database\Eloquent\Model;
 
 class Map extends Model
@@ -15,25 +18,13 @@ class Map extends Model
   */
   protected $dates = ['published_at'];
 
-  /**
-  * Scope queries to territories that have been assigned
-  *
-  * @param  [type] $query [description]
-  * @return [type]        [description]
-  */
-  public function scopeUnavailable($query)
-  {
-    //$query->whereNotNull('finished_on');
-    $query->whereHas('assignments', function ($q) {
-        $q->where('finished_on', NULL);
-    });
-  }
+
 
 /**
  * Each Map has many assignments (??) */
 
-  public function assignments(){
-    return $this->hasMany('App\Assignment');
+  public function users(){
+    return $this->belongsToMany('App\User', 'assignments', 'map_id', 'user_id');
   }
 
 /**
@@ -48,4 +39,37 @@ class Map extends Model
   {
       return $this->hasManyThrough('App\House', 'App\Slip');
   }
+  
+    /**
+  * Scope queries to territories that have been assigned
+  *
+  * @param  [type] $query [description]
+  * @return [type]        [description]
+  */
+  public function scopeUnavailable($query)
+  {
+    //$query->whereNotNull('finished_on');
+    $query->whereHas('users', function ($q) {
+        $q->where('finished_on', NULL);
+    });
+  }
+  
+     /**
+  * Scope queries to territories that are being worked on by the logged in user
+  *
+  * @param  [type] $query [description]
+  * @return [type]        [description]
+  */
+  public function scopeMyMaps($query)
+  {
+    $user = Auth::user();
+    //dd($user);
+    //$query->whereNotNull('finished_on');
+    $query->whereHas('users', function ($q) use($user){
+        $q->where('finished_on', NULL)
+          ->where('user_id', $user->id);
+    });
+  }
+  
+  
 }
