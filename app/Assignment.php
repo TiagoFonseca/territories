@@ -23,7 +23,7 @@ class Assignment extends Model
       */
       public function setAssignedOnAttribute($date)
       {
-         $this->attributes['assigned_on'] = Carbon::parse($date);
+        $this->attributes['assigned_on'] = Carbon::parse($date);
       }
 
       /**

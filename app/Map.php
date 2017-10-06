@@ -4,7 +4,6 @@ namespace App;
 
 use Auth;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Map extends Model
@@ -26,7 +25,14 @@ class Map extends Model
   public function users(){
     return $this->belongsToMany('App\User', 'assignments', 'map_id', 'user_id');
   }
+  
+  /**
+ * Each Map has many assignments (??) */
 
+  // public function assignments(){
+  //   return $this->hasMany('App\Assignment');
+  // }
+          
 /**
  * Each Map has many Slips
  */
@@ -39,6 +45,11 @@ class Map extends Model
   {
       return $this->hasManyThrough('App\House', 'App\Slip');
   }
+  
+   public function maprequests()
+    {
+        return $this->hasMany('App\MapRequests');
+    }
   
     /**
   * Scope queries to territories that have been assigned

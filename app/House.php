@@ -18,4 +18,10 @@ class House extends Model
   {
     return $this->belongsTo('App\Street', 'street_id');
   }
+  
+  public function assignmenthouses()
+    {
+        return $this->hasMany('App\AssignmentHouse');
+    }
+  
 }

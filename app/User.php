@@ -46,10 +46,10 @@ class User extends Model implements AuthenticatableContract,
      * One user can have many Assignments
      * @return [type] [description]
      */
-        public function maps()
-        {
-          return $this->belongsToMany('App\Map', 'assignments', 'user_id', 'map_id');
-        }
+        // public function maps()
+        // {
+        //   return $this->hasMany('App\Map', 'assignments', 'user_id', 'map_id');
+        // }
         
         
 //   public function maps()
@@ -57,7 +57,14 @@ class User extends Model implements AuthenticatableContract,
 //     return $this->hasManyThrough('App\Map', 'App\Assignment', 'user_id');
 //   }
     
-    
+     public function assignments(){
+        return $this->hasMany('App\Assignment');
+      }
+      
+         public function maprequests()
+    {
+        return $this->hasMany('App\MapRequests');
+    }
     /**
     * Get the roles a user has
     */
